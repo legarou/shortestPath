@@ -10,6 +10,8 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
         FileManager fileManager = new FileManager();
+        Graph graph = null;
+        Profile profile = new Profile();
 
         while(! input.equalsIgnoreCase("QUIT")){
             System.out.println("Please enter what you would like to do " +
@@ -24,13 +26,18 @@ public class Main {
             }
             else if (input.equalsIgnoreCase("READ")) {
                 System.out.println(input);
-                fileManager.read("building.txt");
+                fileManager.readBuilding("building.txt");
             }
             else if (input.equalsIgnoreCase("PRINT")) {
                 System.out.println(input);
+                fileManager.printBuilding();
             }
             else if (input.equalsIgnoreCase("PATH")) {
                 System.out.println(input);
+                graph = new Graph("My Graph", fileManager.getNodes());
+                System.out.println("call");
+                graph.shortestPath("bett", "fenster",profile);
+
             }
             else if (input.equalsIgnoreCase("QUIT")) {
                 System.out.println(input);

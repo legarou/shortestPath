@@ -9,16 +9,14 @@ enum NodeType {
 
 public class Node {
 
-    public final int id;
     public final String name;
     public final NodeType type;
     public final boolean leadsOutside;
-    public final Map<Node, Integer> neighbours; // or id + weight?
+    public Map<String, Integer> neighbours; // or id + weight?
     public int distance;
     public boolean visited;
 
-    public Node(int id, String name, NodeType type, boolean leadsOutside, Map neighbours) {
-        this.id = id;
+    public Node(String name, NodeType type, boolean leadsOutside, Map neighbours) {
         this.name = name;
         this.type = type;
         this.leadsOutside = leadsOutside;
@@ -31,12 +29,21 @@ public class Node {
         this.distance = distance;
     }
 
-    public Map<Node, Integer> getNeighbours(){
+    public void setVisited(boolean visited) {
+        this.visited = visited;
+    }
+
+    public Map<String, Integer> getNeighbours(){
         // should return copy
         return neighbours;
     }
 
-    public void setVisited(boolean visited) {
-        this.visited = visited;
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        return "Name: " + name + " Type: " + type.toString() + " Neighbours: " + neighbours.toString() + " visited: " + visited + " leadsOutside: " + leadsOutside + " distance: " + distance;
     }
 }

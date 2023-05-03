@@ -7,78 +7,94 @@ import java.util.Map;
 
 public class Graph {
 
-    public List<Node> nodes; // building
+    public Map<String, Node> nodes; // building
     public String name;
     public boolean goOutside;
     public boolean alternatePath;
 
-    public Graph(String name, List<Node> nodes){
+    public Graph(String name, Map<String, Node> nodes){
         this.name = name;
         //make copy
         this.nodes = nodes;
+        this.goOutside=true;
+        this.alternatePath=true;
     }
 
-    public List<Node> shortestPath(Node start, Node goal, Profile profile) {
+    public void shortestPath(String start, String goal, Profile profile) {
         applyPreference(profile);
-        Map<Node, List<Node>> result = dijkstra(start);
+        System.out.println("dijkstra:");
+        Map<String, List<Node>> result = dijkstra(nodes.get(start));
         // ALTERNATE PATH ?
-        return result.get(goal);
+        //System.out.println(result);
+        System.out.println("RESULT: ");
+        System.out.println(result.get(goal));
     }
 
     public void applyPreference(Profile profile){
+        if(null == profile)
+            return;
+
         // does that even work
-        for(Node variable : nodes)
+        for(Map.Entry<String,Node> variable : nodes.entrySet())
         {
-            if((! profile.useStairs) && (variable.type == NodeType.STAIRS)) {
-                variable.setVisited(true);
+            Node node = variable.getValue();
+            if((! profile.useStairs) && (node.type == NodeType.STAIRS)) {
+                node.setVisited(true);
             }
-            else if((! profile.useElevator) && (variable.type == NodeType.ELEVATOR)) {
-                variable.setVisited(true);
+            else if((! profile.useElevator) && (node.type == NodeType.ELEVATOR)) {
+                node.setVisited(true);
             }
         }
         this.goOutside = profile.goOutside;
         this.alternatePath = profile.alternatePath;
     }
 
-    public Map<Node, List<Node>> dijkstra(Node start){
+    public Map<String, List<Node>> dijkstra(Node start){
         //initialize
         List<Node> queue = new ArrayList<>();
-        Map<Node, List<Node>> path = new HashMap<>();
+        Map<String, List<Node>> path = new HashMap<>();
 
-        for(Node variable : nodes)
+        for(Map.Entry<String,Node> node : nodes.entrySet())
         {
-            if(! variable.visited) {
-                path.put(variable, new ArrayList<Node>());
+            if(! node.getValue().visited) {
+                path.put(node.getValue().getName(), new ArrayList<Node>());
             }
         }
 
         start.setDistance(0);
         queue.add(start);
 
+
         //loop
         while(! queue.isEmpty()){
             Node currentNode = queue.remove(0);
-            currentNode.setVisited(true);
-            Map<Node, Integer> neighbours = currentNode.getNeighbours();
+            if(currentNode.visited) {
+                continue;
+            } else {
+                currentNode.setVisited(true);
+            }
+            Map<String, Integer> neighbours = currentNode.getNeighbours();
 
-            for (Map.Entry<Node,Integer> neighbour : neighbours.entrySet()) {
-                //neighbour.getKey()
-                //neighbour.getValue()
-                if(! goOutside && currentNode.leadsOutside && neighbour.getKey().leadsOutside){
+            for (Map.Entry<String,Integer> neighbour : neighbours.entrySet()) {
+                Node neighbourNode = nodes.get(neighbour.getKey());
+                int neighbourDistance = neighbour.getValue();
+
+                if(! goOutside && currentNode.leadsOutside && neighbourNode.leadsOutside){
                     // does not work for exits next to each other
                     continue;
                 }
-                int newDistance = currentNode.distance + neighbour.getValue();
-                if(! neighbour.getKey().visited) {
-                    queue.add(neighbour.getKey());
+                int newDistance = currentNode.distance + neighbourDistance;
+                if(! neighbourNode.visited) {
+                    queue.add(neighbourNode);
                 }
-                if(newDistance < neighbour.getKey().distance){
-                    neighbour.getKey().setDistance(newDistance);
+                if(newDistance < neighbourNode.distance){
+                    neighbourNode.setDistance(newDistance);
                     List<Node> newPath = new ArrayList<>();
                     newPath.add(currentNode);
-                    newPath.addAll(path.get(neighbour.getKey()));
+                    newPath.addAll(path.get(neighbourNode.getName()));
                     // does it update it?
-                    path.put(neighbour.getKey(), newPath);
+                    // fix path!!! is not right. remove last, but how
+                    path.put(neighbourNode.getName(), newPath);
                 }
             }
             // GO OUTSIDE))

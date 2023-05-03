@@ -11,4 +11,12 @@ public class Profile {
     public boolean goOutside;
     public Algorithm algorithm;
     public boolean alternatePath;
+
+    public Profile(){
+        this.useElevator=true;
+        this.useStairs=true;
+        this.goOutside=true;
+        this.algorithm=Algorithm.DIJKSTRA;
+        this.alternatePath=true;
+    }
 }

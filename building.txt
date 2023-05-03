@@ -1,20 +1,20 @@
 name;type;leads outside;neigbours (id + distance)
-fenster;ROOM;FALSE; ,4; lift von bett zu fenster,2
-bett;ROOM;FALSE;treppe von bett zu fenster,2; lift von bett zu fenster,2
-schlafzimmer tür;ROOM;FALSE;bett,4;abstellraum,4;badezimmer tür,5
-abstellraum;ROOM;FALSE;schlafzimmer tür,4; badezimmer tür,2
-badezimmer tür;ROOM;FALSE;abstellraum,2;schlafzimmer tür,5
-wc;ROOM;FALSE;badezimmer tür,3;badewanne,4
-badewanne;ROOM;FALSE;badezimmer tür,6;wc,4
+fenster;ROOM;FALSE;treppe von bett zu fenster,4,lift von bett zu fenster,2
+bett;ROOM;FALSE;treppe von bett zu fenster,2,lift von bett zu fenster,2
+schlafzimmer tür;ROOM;FALSE;bett,4,abstellraum,4,badezimmer tür,5
+abstellraum;ROOM;FALSE;schlafzimmer tür,4,badezimmer tür,2
+badezimmer tür;ROOM;FALSE;abstellraum,2,schlafzimmer tür,5
+wc;ROOM;FALSE;badezimmer tür,3,badewanne,4
+badewanne;ROOM;FALSE;badezimmer tür,6,wc,4
 küche;ROOM;FALSE;esstisch,7
-esstisch;ROOM;FALSE;küche,7;schreibtisch 1,7;schriebtisch 2,6,vorzimmer,8
-schreibtisch 1;ROOM;FALSE;esstisch,7;schreibtisch 2,4;couch,10
-schreibtisch 2;ROOM;FALSE;esstisch,7;schreibtisch 1,4;couch,6
-couch;ROOM;FALSE;schreibtisch 1,10;schreibtisch 2,6;treppe zu balkon,2;fernseher,3
-fernseher;ROOM;FALSE;couch,3;treppe zu balkon,2
+esstisch;ROOM;FALSE;küche,7;schreibtisch 1,7,schriebtisch 2,6,vorzimmer,8
+schreibtisch 1;ROOM;FALSE;esstisch,7;schreibtisch 2,4,couch,10
+schreibtisch 2;ROOM;FALSE;esstisch,7,schreibtisch 1,4,couch,6
+couch;ROOM;FALSE;schreibtisch 1,10,schreibtisch 2,6,treppe zu balkon,2,fernseher,3
+fernseher;ROOM;FALSE;couch,3,treppe zu balkon,2
 balkon ;ROOM;FALSE;treppe zu balkon,1
-vorzimmer;ROOM;FALSE;esstisch,8;eingangstür,1
+vorzimmer;ROOM;FALSE;esstisch,8,eingangstür,1
 eingangstür;ROOM;TRUE;vorzimmer,1
-treppe zu balkon;STAIRS;FALSE;couch,2;fernseher,2;balkon,1
-treppe von bett zu fenster;STAIRS;FALSE;fenster,4;bett,3
-lift von bett zu fenster;ELEVATOR;FALSE;fenster,2;bett,3
+treppe zu balkon;STAIRS;FALSE;couch,2,fernseher,2,balkon,1
+treppe von bett zu fenster;STAIRS;FALSE;fenster,4,bett,3
+lift von bett zu fenster;ELEVATOR;FALSE;fenster,2,bett,3
