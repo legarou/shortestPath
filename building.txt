@@ -16,5 +16,5 @@ balkon ;ROOM;FALSE;treppe zu balkon,1
 vorzimmer;ROOM;FALSE;esstisch,8,eingangstür,1
 eingangstür;ROOM;TRUE;vorzimmer,1
 treppe zu balkon;STAIRS;FALSE;couch,2,fernseher,2,balkon,1
-treppe von bett zu fenster;STAIRS;FALSE;fenster,4,bett,3
-lift von bett zu fenster;ELEVATOR;FALSE;fenster,2,bett,3
+treppe von bett zu fenster;STAIRS;FALSE;fenster,2,bett,3
+lift von bett zu fenster;ELEVATOR;FALSE;fenster,4,bett,3

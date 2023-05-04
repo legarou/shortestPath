@@ -9,9 +9,7 @@ public class Main {
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-        FileManager fileManager = new FileManager();
-        Graph graph = null;
-        Profile profile = new Profile();
+        ShortestPathManager shortestPathManager = new ShortestPathManager();
 
         while(! input.equalsIgnoreCase("QUIT")){
             System.out.println("Please enter what you would like to do " +
@@ -22,31 +20,66 @@ public class Main {
                 System.out.println(input);
             }
             else if (input.equalsIgnoreCase("PROFILE")) {
-                System.out.println(input);
+                shortestPathManager.setProfile(askAbout("use an elevator"), askAbout("use the stairs"), askAbout("go outside"), askAbout("receive an alternate path, if your profile does not deliver a result?"), askAlgorithm());
             }
             else if (input.equalsIgnoreCase("READ")) {
                 System.out.println(input);
-                fileManager.readBuilding("building.txt");
+                shortestPathManager.readBuilding("building.txt");
             }
             else if (input.equalsIgnoreCase("PRINT")) {
-                System.out.println(input);
-                fileManager.printBuilding();
+                shortestPathManager.printBuilding();
             }
             else if (input.equalsIgnoreCase("PATH")) {
-                System.out.println(input);
-                graph = new Graph("My Graph", fileManager.getNodes());
-                System.out.println("call");
-                graph.shortestPath("bett", "fenster",profile);
-
+                // ask about profile
+                shortestPathManager.shortestPathWithProfile("bett", "fenster");
             }
             else if (input.equalsIgnoreCase("QUIT")) {
-                System.out.println(input);
+                System.out.println("Goodbye!");
             }
             else {
                 System.out.println(input + "\nInvalid input, please try again.\n");
             }
 
         }
+    }
+
+    public static boolean askAbout(String question){
+        String input = "";
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        System.out.println("Would you like to be able to " + question + "? \nPlease enter yes or no");
+
+        while(! input.equalsIgnoreCase("QUIT")){
+            if (input.equalsIgnoreCase("yes") || input.equalsIgnoreCase("y")) {
+                return true;
+            }
+            else if (input.equalsIgnoreCase("no") || input.equalsIgnoreCase("n")) {
+                return false;
+            }
+            else {
+                System.out.println("Wrong answer, please try again with 'yes', 'no', 'y' or 'n'");
+            }
+        }
+        return true;
+    }
+
+    public static String askAlgorithm(){
+        String input = "";
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Which Algorithm would you like to use, Dijkstra or FLoyd-Warshall? \nPlease enter Dijkstra or Floyd");
+
+        while(! input.equalsIgnoreCase("QUIT")){
+            if (input.equalsIgnoreCase("d") || input.equalsIgnoreCase("dijkstra")) {
+                return "DIJKSTRA";
+            }
+            else if (input.equalsIgnoreCase("f") || input.equalsIgnoreCase("floyd")) {
+                return "FLOYD_WARSHALL";
+            }
+            else {
+                System.out.println("Wrong answer, please try again with 'Dijkstra', 'Floyd', 'd' or 'f'");
+            }
+        }
+        return "DIJKSTRA";
     }
 
 }

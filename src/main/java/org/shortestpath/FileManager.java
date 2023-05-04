@@ -36,7 +36,7 @@ public class FileManager {
         String[] splitNeighbours = splitData[3].split(",");
         for (int i = 0; i < splitNeighbours.length; i++) {
             neighbours.put(splitNeighbours[i], Integer.parseInt(splitNeighbours[++i]));
-            System.out.println(splitNeighbours[i-1] + " , " + splitNeighbours[i]);
+            //System.out.println(splitNeighbours[i-1] + " , " + splitNeighbours[i]);
         }
 
         Node newNode = new Node(splitData[0], NodeType.valueOf(splitData[1]), Boolean.parseBoolean(splitData[2]), neighbours);
@@ -44,9 +44,15 @@ public class FileManager {
     }
 
     public void printBuilding() {
-        for (Map.Entry<String,Node> node : nodes.entrySet()) {
-            System.out.println(node.getValue().toString());
+        if(! nodes.isEmpty()){
+            for (Map.Entry<String,Node> node : nodes.entrySet()) {
+                System.out.println(node.getValue().toString());
+            }
         }
+        else {
+            System.out.println("There is no building to print!");
+        }
+
     }
 
     public Map<String, Node> getNodes(){

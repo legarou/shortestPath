@@ -7,57 +7,87 @@ import java.util.Map;
 
 public class Graph {
 
-    public Map<String, Node> nodes; // building
-    public String name;
-    public boolean goOutside;
-    public boolean alternatePath;
+    private Map<String, Node> nodes; // building
+    private String name;
+    private String start;
+    private Profile profile;
+    private Map<String, String> predecessor;
 
     public Graph(String name, Map<String, Node> nodes){
         this.name = name;
         //make copy
         this.nodes = nodes;
-        this.goOutside=true;
-        this.alternatePath=true;
+        this.start=null;
+        this.predecessor = new HashMap<>();
+        this.profile = new Profile();
     }
 
-    public void shortestPath(String start, String goal, Profile profile) {
-        applyPreference(profile);
-        System.out.println("dijkstra:");
-        Map<String, List<Node>> result = dijkstra(nodes.get(start));
-        // ALTERNATE PATH ?
-        //System.out.println(result);
-        System.out.println("RESULT: ");
-        System.out.println(result.get(goal));
+    public void shortestPath(String start, String goal, Profile newProfile) {
+        if(nodes == null) {
+            System.out.println("Cannot call algorithm with no building!");
+            return;
+        }
+
+        // if profile unchanged & already calculated
+        if(this.start.equals(start) && ! profileWasUpdated(newProfile)){
+            System.out.println("RESULT: ");
+            printPredecessor(predecessor, start, goal);
+            return;
+        }
+
+        applyPreference(newProfile);
+        if(profile.getAlgorithm().equals(Algorithm.DIJKSTRA)){
+            System.out.println("dijkstra:");
+            dijkstra(nodes.get(start));
+            // ALTERNATE PATH ?
+            System.out.println("RESULT: ");
+            printPredecessor(predecessor, start, goal);
+
+        } else if (profile.getAlgorithm().equals(Algorithm.FLOYD_WARSHALL)) {
+            System.out.println("NOT SET UP");
+        }
+        else {
+            System.out.println("ERROR");
+        }
+
+    }
+
+    public boolean profileWasUpdated(Profile newProfile){
+        if(null == profile)
+            return true;
+
+        return ! ( (this.profile.isUseElevator() == newProfile.isUseElevator())
+                && (this.profile.isUseStairs() == newProfile.isUseStairs())
+                && (this.profile.isAlternatePath() == newProfile.isAlternatePath())
+                && (this.profile.isGoOutside() == newProfile.isGoOutside())
+                && (this.profile.getAlgorithm().equals(newProfile.getAlgorithm())) );
     }
 
     public void applyPreference(Profile profile){
         if(null == profile)
             return;
 
-        // does that even work
         for(Map.Entry<String,Node> variable : nodes.entrySet())
         {
             Node node = variable.getValue();
-            if((! profile.useStairs) && (node.type == NodeType.STAIRS)) {
+            if((! profile.isUseStairs()) && (node.type == NodeType.STAIRS)) {
                 node.setVisited(true);
             }
-            else if((! profile.useElevator) && (node.type == NodeType.ELEVATOR)) {
+            else if((! profile.isUseElevator()) && (node.type == NodeType.ELEVATOR)) {
                 node.setVisited(true);
             }
         }
-        this.goOutside = profile.goOutside;
-        this.alternatePath = profile.alternatePath;
     }
 
-    public Map<String, List<Node>> dijkstra(Node start){
+    public void dijkstra(Node start){
         //initialize
         List<Node> queue = new ArrayList<>();
-        Map<String, List<Node>> path = new HashMap<>();
+        predecessor.clear();
 
         for(Map.Entry<String,Node> node : nodes.entrySet())
         {
             if(! node.getValue().visited) {
-                path.put(node.getValue().getName(), new ArrayList<Node>());
+                predecessor.put(node.getKey(), "");
             }
         }
 
@@ -79,7 +109,7 @@ public class Graph {
                 Node neighbourNode = nodes.get(neighbour.getKey());
                 int neighbourDistance = neighbour.getValue();
 
-                if(! goOutside && currentNode.leadsOutside && neighbourNode.leadsOutside){
+                if(! profile.isGoOutside() && currentNode.leadsOutside && neighbourNode.leadsOutside){
                     // does not work for exits next to each other
                     continue;
                 }
@@ -89,21 +119,30 @@ public class Graph {
                 }
                 if(newDistance < neighbourNode.distance){
                     neighbourNode.setDistance(newDistance);
-                    List<Node> newPath = new ArrayList<>();
-                    newPath.add(currentNode);
-                    newPath.addAll(path.get(neighbourNode.getName()));
-                    // does it update it?
-                    // fix path!!! is not right. remove last, but how
-                    path.put(neighbourNode.getName(), newPath);
+                    predecessor.put(neighbourNode.getName(), currentNode.getName());
                 }
             }
-            // GO OUTSIDE))
+            // GO OUTSIDE
         }
-
-        return path;
     }
 
+    public void printPredecessor(Map<String, String> predecessor, String start, String end){
+        String currentNode = end;
+        if(predecessor.containsKey(end) && predecessor.containsKey(start)){
+            while(! currentNode.equals(start)) {
+                printNode(currentNode);
+                currentNode = predecessor.get(currentNode);
+            }
+            printNode(currentNode);
+        }
+        else {
+            System.out.println("faulty call");
+        }
+    }
 
+    public void printNode(String node) {
+        System.out.println(nodes.get(node));
+    }
 
 
 
