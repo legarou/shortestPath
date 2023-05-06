@@ -36,6 +36,24 @@ public class Main {
             else if (input.equalsIgnoreCase("QUIT")) {
                 System.out.println("Goodbye!");
             }
+            // TEST
+            else if (input.equalsIgnoreCase("TEST")) {
+                System.out.println("Test!");
+                System.out.println("Read building");
+                shortestPathManager.readBuilding("building.txt");
+                System.out.println("Print building");
+                shortestPathManager.printBuilding();
+
+                System.out.println("Setup Profile Dijkstra");
+                shortestPathManager.setProfile(true, true, true, true, "DIJKSTRA");
+                System.out.println("Shortest path Dijkstra");
+                shortestPathManager.shortestPathWithProfile("bett", "fenster");
+
+                System.out.println("Setup Profile Floyd");
+                shortestPathManager.setProfile(true, true, true, true, "Floyd_warshall");
+                System.out.println("Shortest path Floyd");
+                shortestPathManager.shortestPathWithProfile("bett", "fenster");
+            }
             else {
                 System.out.println(input + "\nInvalid input, please try again.\n");
             }

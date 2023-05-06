@@ -1,4 +1,7 @@
 package org.shortestpath;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Map;
 
 enum NodeType {
@@ -8,13 +11,12 @@ enum NodeType {
 }
 
 public class Node {
-
-    public final String name;
-    public final NodeType type;
-    public final boolean leadsOutside;
-    public Map<String, Integer> neighbours; // or id + weight?
-    public int distance;
-    public boolean visited;
+    private final String name;
+    private final NodeType type;
+    private final boolean leadsOutside;
+    private Map<String, Integer> neighbours; // or id + weight?
+    private int distance;
+    private boolean visited;
 
     public Node(String name, NodeType type, boolean leadsOutside, Map neighbours) {
         this.name = name;
@@ -45,5 +47,32 @@ public class Node {
     @Override
     public String toString() {
         return "Name: " + name + " Type: " + type.toString() + " Neighbours: " + neighbours.toString() + " visited: " + visited + " leadsOutside: " + leadsOutside + " distance: " + distance;
+    }
+
+    public int getNeighbourDistance(Node node){
+        if(neighbours.containsKey(node.getName())){
+            return neighbours.get(node.getName());
+        }
+        return -1;
+    }
+
+    public NodeType getType() {
+        return type;
+    }
+
+    public boolean isLeadsOutside() {
+        return leadsOutside;
+    }
+
+    public void setNeighbours(Map<String, Integer> neighbours) {
+        this.neighbours = neighbours;
+    }
+
+    public int getDistance() {
+        return distance;
+    }
+
+    public boolean isVisited() {
+        return visited;
     }
 }

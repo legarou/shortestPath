@@ -34,9 +34,6 @@ public class ShortestPathManager {
         fileManager.printBuilding();
     }
 
-
-
-
     public void shortestPathWithProfile(String start, String end){
         if(null != profile)
         {
