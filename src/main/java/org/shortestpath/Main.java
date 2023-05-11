@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 public class Main {
     public static void main(String[] args) throws IOException {
         String input = "";
+        String von = "A0.06 Mensa";
+        String zu = "F.4.05 Lesezone";
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
@@ -40,19 +42,50 @@ public class Main {
             else if (input.equalsIgnoreCase("TEST")) {
                 System.out.println("Test!");
                 System.out.println("Read building");
-                shortestPathManager.readBuilding("building.txt");
-                System.out.println("Print building");
-                shortestPathManager.printBuilding();
+                shortestPathManager.readBuilding("building2.txt");
+                //System.out.println("Print building");
+                //shortestPathManager.printBuilding();
 
+                von = "A0.06 Mensa";
+                zu = "F.4.05 Lesezone";
                 System.out.println("Setup Profile Dijkstra");
                 shortestPathManager.setProfile(true, true, true, true, "DIJKSTRA");
                 System.out.println("Shortest path Dijkstra");
-                shortestPathManager.shortestPathWithProfile("bett", "fenster");
+                shortestPathManager.shortestPathWithProfile(von,zu);
 
+                zu = "F.6.12 Labor";
+                System.out.println("Setup Profile Dijkstra");
+                shortestPathManager.alterProfile(true, true, true, true, "DIJKSTRA");
+                System.out.println("Shortest path Dijkstra");
+                shortestPathManager.shortestPathWithProfile(von,zu);
+
+                von = "F.6.12 Labor";
+                zu = "A4.31 Buero";
+                System.out.println("Setup Profile Dijkstra");
+                shortestPathManager.alterProfile(true, true, true, true, "DIJKSTRA");
+                System.out.println("Shortest path Dijkstra");
+                shortestPathManager.shortestPathWithProfile(von,zu);
+
+
+                von = "A0.06 Mensa";
+                zu = "F.4.05 Lesezone";
                 System.out.println("Setup Profile Floyd");
-                shortestPathManager.setProfile(true, true, true, true, "Floyd_warshall");
+                shortestPathManager.alterProfile(true, true, true, true, "Floyd_warshall");
                 System.out.println("Shortest path Floyd");
-                shortestPathManager.shortestPathWithProfile("bett", "fenster");
+                shortestPathManager.shortestPathWithProfile(von,zu);
+
+                zu = "F.6.12 Labor";
+                System.out.println("Setup Profile Floyd");
+                shortestPathManager.alterProfile(true, true, true, true, "Floyd_warshall");
+                System.out.println("Shortest path Floyd");
+                shortestPathManager.shortestPathWithProfile(von,zu);
+
+                von = "F.6.12 Labor";
+                zu = "A4.31 Buero";
+                System.out.println("Setup Profile Floyd");
+                shortestPathManager.alterProfile(true, true, true, true, "Floyd_warshall");
+                System.out.println("Shortest path Floyd");
+                shortestPathManager.shortestPathWithProfile(von,zu);
             }
             else {
                 System.out.println(input + "\nInvalid input, please try again.\n");

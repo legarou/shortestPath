@@ -27,7 +27,7 @@ public class ShortestPathManager {
     }
 
     public void readBuilding(String file){
-        fileManager.readBuilding("building.txt");
+        fileManager.readBuilding(file);
     }
 
     public void printBuilding(){
@@ -37,7 +37,9 @@ public class ShortestPathManager {
     public void shortestPathWithProfile(String start, String end){
         if(null != profile)
         {
-            graph = new Graph("My Graph", fileManager.getNodes());
+            if(null == graph){
+                graph = new Graph("My Graph", fileManager.getNodes());
+            }
             graph.shortestPath(start, end,profile);
         }
     }

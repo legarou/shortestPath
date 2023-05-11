@@ -7,7 +7,9 @@ import java.util.Map;
 enum NodeType {
     ROOM,
     STAIRS,
-    ELEVATOR
+    ELEVATOR,
+    PATH,
+    DOOR
 }
 
 public class Node {

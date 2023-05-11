@@ -30,7 +30,7 @@ public class Profile {
     }
 
     public void setAlgorithmFromString(String algorithm){
-        this.algorithm=Algorithm.valueOf(algorithm);
+        this.algorithm=Algorithm.valueOf(algorithm.toUpperCase());
     }
 
     public Algorithm getAlgorithm(){

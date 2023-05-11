@@ -1,5 +1,7 @@
 package org.shortestpath;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,6 +51,7 @@ public class Graph {
 
         this.start = start;
         if(! profileWasUpdated(newProfile) && profile.getAlgorithm().equals(Algorithm.FLOYD_WARSHALL)){
+            System.out.println("HERE");
             this.start = start;
             System.out.println("RESULT: ");
             printPredecessor();
@@ -121,6 +124,7 @@ public class Graph {
     }
 
     public void dijkstra(){
+        Instant starts = Instant.now();
         //initialize
         List<Node> queue = new ArrayList<>();
         predecessor.clear();
@@ -137,7 +141,15 @@ public class Graph {
 
         //loop
         while(! queue.isEmpty()){
-            Node currentNode = queue.remove(0);
+            // get smallest distance
+            Node currentNode = queue.get(0);
+            for (Node node : queue) {
+                if(node.getDistance() < currentNode.getDistance()){
+                    currentNode=node;
+                }
+            }
+            queue.remove(currentNode);
+
             if(currentNode.isVisited()) {
                 continue;
             } else {
@@ -164,6 +176,8 @@ public class Graph {
             }
             // GO OUTSIDE
         }
+        Instant ends = Instant.now();
+        System.out.println("Dijkstra: " + Duration.between(starts, ends));
     }
 
     public void printPredecessor(){
@@ -208,6 +222,8 @@ public class Graph {
     }
 
     public void floyd_warshall(){
+        Instant starts = Instant.now();
+
         //initialize
         predecessor.clear();
         Map<String, Node> shallowCopy = new HashMap(nodes);
@@ -223,6 +239,7 @@ public class Graph {
 
         for(Map.Entry<String,Node> node1 : shallowCopy.entrySet())
         {
+
             for(Map.Entry<String,Node> node2 : shallowCopy.entrySet())
             {
                 predecessor.put(node1.getKey() + node2.getKey(), "");
@@ -243,23 +260,22 @@ public class Graph {
         }
 
         //
+        var test1 = shallowCopy.keySet().toArray();
         for(int i = 0; i < shallowCopy.size(); i++) {
             for(Map.Entry<String,Node> node1 : shallowCopy.entrySet())
             {
-                for(Map.Entry<String,Node> node2 : shallowCopy.entrySet())
-                {
-                    for(Map.Entry<String,Node> nodeMid : shallowCopy.entrySet())
-                    {
-                        int newDistance = distanceMap.get(node1.getKey() + nodeMid.getKey())+ distanceMap.get(nodeMid.getKey() + node2.getKey());
-                        if(newDistance < distanceMap.get(node1.getKey() + node2.getKey())){
-                            distanceMap.put(node1.getKey() + node2.getKey(), newDistance);
-                            predecessor.put(node1.getKey() + node2.getKey(), predecessor.get(node1.getKey() + nodeMid.getKey()) + ";" + predecessor.get(nodeMid.getKey() + node2.getKey()));
-                        }
-
+                for(Map.Entry<String,Node> node2 : shallowCopy.entrySet()) {
+                    var nodeMid = test1[i];
+                    int newDistance = distanceMap.get(node1.getKey() + nodeMid)+ distanceMap.get(nodeMid + node2.getKey());
+                    if(newDistance < distanceMap.get(node1.getKey() + node2.getKey())){
+                        distanceMap.put(node1.getKey() + node2.getKey(), newDistance);
+                        predecessor.put(node1.getKey() + node2.getKey(), predecessor.get(node1.getKey() + nodeMid) + ";" + predecessor.get(nodeMid + node2.getKey()));
                     }
                 }
             }
         }
+        Instant ends = Instant.now();
+        System.out.println("Floyd: " + Duration.between(starts, ends));
     }
 
 }
