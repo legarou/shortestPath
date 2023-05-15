@@ -1,7 +1,9 @@
 package org.shortestpath;
 import java.io.File;  // Import the File class
 import java.io.FileNotFoundException;  // Import this class to handle errors
+import java.io.IOException;
 import java.util.*;
+import java.util.prefs.PreferencesFactory;
 
 
 public class FileManager {
@@ -26,9 +28,41 @@ public class FileManager {
             }
             myReader.close();
         } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
+            System.out.println("File " + filename + " could not be found.");
             e.printStackTrace();
         }
+    }
+
+    public Profile readProfile(String filename) throws IOException {
+        Profile newProfile = null;
+        try {
+            File myObj = new File(filename);
+            Scanner myReader = new Scanner(myObj);
+            boolean firstline = true;
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                if(firstline){
+                    firstline=false;
+                    continue;
+                }
+                //System.out.println(data);
+                String[] splitData = data.split(";");
+                if(5 != splitData.length){
+                    return null;
+                }
+                else {
+                    newProfile = new Profile(Boolean.parseBoolean(splitData[0]), Boolean.parseBoolean(splitData[1]), Boolean.parseBoolean(splitData[2]), Boolean.parseBoolean(splitData[4]), splitData[3]);
+                }
+
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            //System.out.println("File " + filename + " could not be found, profile is not yet set up.");
+            File f = new File("profile.txt");
+            f.createNewFile();
+            return null;
+        }
+        return newProfile;
     }
 
     public Node buildNode(String[] splitData){

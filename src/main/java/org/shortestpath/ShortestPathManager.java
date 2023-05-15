@@ -1,5 +1,7 @@
 package org.shortestpath;
 
+import java.io.IOException;
+
 public class ShortestPathManager {
     FileManager fileManager;
     Graph graph;
@@ -12,10 +14,6 @@ public class ShortestPathManager {
     }
 
     public void setProfile(boolean useElevator, boolean useStairs, boolean goOutside, boolean alternatePath, String algorithm){
-        profile = new Profile( useElevator,  useStairs,  goOutside,  alternatePath,  algorithm);
-    }
-
-    public void alterProfile(boolean useElevator, boolean useStairs, boolean goOutside, boolean alternatePath, String algorithm){
         if(null == profile){
             profile = new Profile();
         }
@@ -28,6 +26,11 @@ public class ShortestPathManager {
 
     public void readBuilding(String file){
         fileManager.readBuilding(file);
+    }
+
+    public boolean readProfile() throws IOException {
+        profile = fileManager.readProfile("profile.txt");
+        return ! (null == profile);
     }
 
     public void printBuilding(){
