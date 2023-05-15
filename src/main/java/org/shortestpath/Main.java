@@ -2,27 +2,26 @@ package org.shortestpath;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         String input = "";
         String von = "A0.06 Mensa";
         String zu = "F.4.05 Lesezone";
+        String[] profileQuestions = { "use an elevator", "use the stairs", "go outside", "receive an alternate path, if your profile does not deliver a result?", "algorithm"};
+        boolean[] profileAnswers = { true, true, true, true};
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
         ShortestPathManager shortestPathManager = new ShortestPathManager();
         if(! shortestPathManager.readProfile()){
             System.out.println("Hello! Please set up your profile: ");
-            shortestPathManager.setProfile(askAbout("use an elevator"), askAbout("use the stairs"), askAbout("go outside"), askAbout("receive an alternate path, if your profile does not deliver a result?"), askAlgorithm());
-
+            input = "profile";
         }
 
-        while(! input.equalsIgnoreCase("QUIT")){
-            System.out.println("Please enter what you would like to do " +
-                    "(help, read, print, path, profile, quit):\n");
-            input = reader.readLine();
-
+        do {
             if(input.equalsIgnoreCase("HELP")){
                 System.out.println("READ: \t\tRead the building into the program from a prepared file.");
                 System.out.println("PRINT:\t\tPrint the building plan.");
@@ -32,10 +31,65 @@ public class Main {
                 System.out.println("QUIT:\t\tQuit the program.");
             }
             else if (input.equalsIgnoreCase("PROFILE")) {
-                shortestPathManager.setProfile(askAbout("use an elevator"), askAbout("use the stairs"), askAbout("go outside"), askAbout("receive an alternate path, if your profile does not deliver a result?"), askAlgorithm());
+                for(int i = 0; i < profileQuestions.length;){
+                    String[] options = {"yes", "y", "no", "n"};
+                    while(! (input.equalsIgnoreCase("return") || input.equalsIgnoreCase("quit"))){
+                        if(4 == i){
+                            System.out.println("Which Algorithm would you like to use, Dijkstra or FLoyd-Warshall? \nPlease enter Dijkstra or Floyd");
+                            options[0] = "dijkstra";
+                            options[1] = "d";
+                            options[2] = "floyd";
+                            options[3] = "f";
+                        }
+                        else {
+                            System.out.println("Would you like to be able to " + profileQuestions[i] + "? \nPlease enter yes or no");
+                        }
+                        input = reader.readLine();
+                        if (input.equalsIgnoreCase(options[0]) || input.equalsIgnoreCase(options[1]) || input.equalsIgnoreCase(options[2]) || input.equalsIgnoreCase(options[3]) || input.equalsIgnoreCase("return") || input.equalsIgnoreCase("quit")) {
+                            switch (input.charAt(0)) {
+                                case 'y':
+                                case 'Y':   profileAnswers[i] = true;
+                                    break;
+                                case 'n':
+                                case 'N':   profileAnswers[i] = false;
+                                    break;
+                                case 'd':
+                                case 'D':   profileQuestions[4] = "DIJKSTRA";
+                                    break;
+                                case 'f':
+                                case 'F':   profileQuestions[4] = "FLOYD_WARSHALL";
+                                    break;
+                            }
+                            break;
+                        }
+                        else {
+                            System.out.println("Wrong answer, please try again with '" + options[0] + "', '" + options[0] + "', '" + options[0] + "', '" + options[0] + ", 'quit' or 'return' in order to get to the previous question.");
+                        }
+                    }
+                    if(input.equalsIgnoreCase("return")){
+                        if(0 != i){
+                            i--;
+                        }
+                    }
+                    else if(input.equalsIgnoreCase("quit")){
+                        break;
+                    }
+                    else {
+                        i++;
+                    }
+                    input="xx";
+                }
+                if(input.equalsIgnoreCase("quit")){
+                    System.out.println("Profile update aborted.");
+                }
+                else {
+                    shortestPathManager.setProfile(profileAnswers[0], profileAnswers[1], profileAnswers[2], profileAnswers[3], profileQuestions[4]);
+                }
             }
             else if (input.equalsIgnoreCase("READ")) {
-                shortestPathManager.readBuilding("building.txt");
+                System.out.println("Please enter the filename: (example: building.txt)");
+                input = reader.readLine();
+                shortestPathManager.readBuilding(input);
             }
             else if (input.equalsIgnoreCase("PRINT")) {
                 shortestPathManager.printBuilding();
@@ -45,13 +99,85 @@ public class Main {
                 String from = reader.readLine();
                 System.out.println("Please enter where You would like to go:");
                 String to = reader.readLine();
-                shortestPathManager.shortestPathWithProfile(from, to);
+                System.out.println("Would you like to use your own profile, or use a new one for one time only? Please answer with 'new' or 'current':");
+                while(! (input.equalsIgnoreCase("current") || input.equalsIgnoreCase("c") || input.equalsIgnoreCase("new") || input.equalsIgnoreCase("n"))){
+                    input = reader.readLine();
+                    if (input.equalsIgnoreCase("new") || input.equalsIgnoreCase("n")) {
+                        for(int i = 0; i < profileQuestions.length;){
+                            String[] options = {"yes", "y", "no", "n"};
+                            while(! (input.equalsIgnoreCase("return") || input.equalsIgnoreCase("quit"))){
+                                if(4 == i){
+                                    System.out.println("Which Algorithm would you like to use, Dijkstra or FLoyd-Warshall? \nPlease enter Dijkstra or Floyd");
+                                    options[0] = "dijkstra";
+                                    options[1] = "d";
+                                    options[2] = "floyd";
+                                    options[3] = "f";
+                                }
+                                else {
+                                    System.out.println("Would you like to be able to " + profileQuestions[i] + "? \nPlease enter yes or no");
+                                }
+                                input = reader.readLine();
+                                if (input.equalsIgnoreCase(options[0]) || input.equalsIgnoreCase(options[1]) || input.equalsIgnoreCase(options[2]) || input.equalsIgnoreCase(options[3]) || input.equalsIgnoreCase("return") || input.equalsIgnoreCase("quit")) {
+                                    switch (input.charAt(0)) {
+                                        case 'y':
+                                        case 'Y':   profileAnswers[i] = true;
+                                            break;
+                                        case 'n':
+                                        case 'N':   profileAnswers[i] = false;
+                                            break;
+                                        case 'd':
+                                        case 'D':   profileQuestions[4] = "DIJKSTRA";
+                                            break;
+                                        case 'f':
+                                        case 'F':   profileQuestions[4] = "FLOYD_WARSHALL";
+                                            break;
+                                    }
+                                    break;
+                                }
+                                else {
+                                    System.out.println("Wrong answer, please try again with '" + options[0] + "', '" + options[0] + "', '" + options[0] + "', '" + options[0] + ", 'quit' or 'return' in order to get to the previous question.");
+                                }
+                            }
+                            if(input.equalsIgnoreCase("return")){
+                                if(0 != i){
+                                    i--;
+                                }
+                            }
+                            else if(input.equalsIgnoreCase("quit")){
+                                System.out.println("Profile update aborted.");
+                                break;
+                            }
+                            else {
+                                i++;
+                            }
+                            input="xx";
+                        }
+                        if(input.equalsIgnoreCase("quit")){
+                            System.out.println("Shortest path calculation needs to be aborted as well.");
+                            break;
+                        }
+                        else{
+                            shortestPathManager.shortestPathWithNewProfile(from, to, profileAnswers[0], profileAnswers[1], profileAnswers[2], profileAnswers[3], profileQuestions[4]);
+                        }
+
+                    }
+                    else if (input.equalsIgnoreCase("current") || input.equalsIgnoreCase("c")) {
+                        shortestPathManager.shortestPathWithOwnProfile(from, to);
+                    }
+                    else {
+                        System.out.println("Wrong answer, please try again with 'new', 'current', 'n' or 'c'");
+                    }
+                }
+
+
             }
             else if (input.equalsIgnoreCase("QUIT")) {
-                System.out.println("Goodbye!");
+            }
+            else {
+                System.out.println(input + "\nInvalid input, please try again.\n");
             }
             // TEST
-            else if (input.equalsIgnoreCase("TEST")) {
+            /*else if (input.equalsIgnoreCase("TEST")) {
                 System.out.println("Test!");
                 System.out.println("Read building");
                 shortestPathManager.readBuilding("building2.txt");
@@ -63,20 +189,20 @@ public class Main {
                 System.out.println("Setup Profile Dijkstra");
                 shortestPathManager.setProfile(true, true, true, true, "DIJKSTRA");
                 System.out.println("Shortest path Dijkstra");
-                shortestPathManager.shortestPathWithProfile(von,zu);
+                shortestPathManager.shortestPathWithOwnProfile(von,zu);
 
                 zu = "F.6.12 Labor";
                 System.out.println("Setup Profile Dijkstra");
                 shortestPathManager.setProfile(true, true, true, true, "DIJKSTRA");
                 System.out.println("Shortest path Dijkstra");
-                shortestPathManager.shortestPathWithProfile(von,zu);
+                shortestPathManager.shortestPathWithOwnProfile(von,zu);
 
                 von = "F.6.12 Labor";
                 zu = "A4.31 Buero";
                 System.out.println("Setup Profile Dijkstra");
                 shortestPathManager.setProfile(true, true, true, true, "DIJKSTRA");
                 System.out.println("Shortest path Dijkstra");
-                shortestPathManager.shortestPathWithProfile(von,zu);
+                shortestPathManager.shortestPathWithOwnProfile(von,zu);
 
 
                 von = "A0.06 Mensa";
@@ -84,67 +210,28 @@ public class Main {
                 System.out.println("Setup Profile Floyd");
                 shortestPathManager.setProfile(true, true, true, true, "Floyd_warshall");
                 System.out.println("Shortest path Floyd");
-                shortestPathManager.shortestPathWithProfile(von,zu);
+                shortestPathManager.shortestPathWithOwnProfile(von,zu);
 
                 zu = "F.6.12 Labor";
                 System.out.println("Setup Profile Floyd");
                 shortestPathManager.setProfile(true, true, true, true, "Floyd_warshall");
                 System.out.println("Shortest path Floyd");
-                shortestPathManager.shortestPathWithProfile(von,zu);
+                shortestPathManager.shortestPathWithOwnProfile(von,zu);
 
                 von = "F.6.12 Labor";
                 zu = "A4.31 Buero";
                 System.out.println("Setup Profile Floyd");
                 shortestPathManager.setProfile(true, true, true, true, "Floyd_warshall");
                 System.out.println("Shortest path Floyd");
-                shortestPathManager.shortestPathWithProfile(von,zu);
-            }
-            else {
-                System.out.println(input + "\nInvalid input, please try again.\n");
-            }
+                shortestPathManager.shortestPathWithOwnProfile(von,zu);
+            }*/
 
-        }
-    }
-
-    public static boolean askAbout(String question) throws IOException {
-        String input = "";
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
-        System.out.println("Would you like to be able to " + question + "? \nPlease enter yes or no");
-
-        while(! input.equalsIgnoreCase("QUIT")){
+            System.out.println("Please enter what you would like to do " +
+                    "(help, read, print, path, profile, quit):\n");
             input = reader.readLine();
-            if (input.equalsIgnoreCase("yes") || input.equalsIgnoreCase("y")) {
-                return true;
-            }
-            else if (input.equalsIgnoreCase("no") || input.equalsIgnoreCase("n")) {
-                return false;
-            }
-            else {
-                System.out.println("Wrong answer, please try again with 'yes', 'no', 'y' or 'n'");
-            }
-        }
-        return true;
-    }
 
-    public static String askAlgorithm() throws IOException {
-        String input = "";
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Which Algorithm would you like to use, Dijkstra or FLoyd-Warshall? \nPlease enter Dijkstra or Floyd");
-
-        while(! input.equalsIgnoreCase("QUIT")){
-            input = reader.readLine();
-            if (input.equalsIgnoreCase("d") || input.equalsIgnoreCase("dijkstra")) {
-                return "DIJKSTRA";
-            }
-            else if (input.equalsIgnoreCase("f") || input.equalsIgnoreCase("floyd")) {
-                return "FLOYD_WARSHALL";
-            }
-            else {
-                System.out.println("Wrong answer, please try again with 'Dijkstra', 'Floyd', 'd' or 'f'");
-            }
-        }
-        return "DIJKSTRA";
+        } while(! input.equalsIgnoreCase("QUIT"));
+        System.out.println("Goodbye!");
     }
 
 }

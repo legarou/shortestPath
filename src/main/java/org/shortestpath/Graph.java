@@ -10,52 +10,41 @@ import java.util.Map;
 public class Graph {
 
     private Map<String, Node> nodes; // building
-    private String name;
     private String start;
     private String end;
     private Profile profile;
     private Map<String, String> predecessor;
 
-    public Graph(String name, Map<String, Node> nodes){
-        this.name = name;
-        //make copy
-        this.nodes = nodes;
+    public Graph(){
+        this.nodes= new HashMap<>();
         this.start=null;
         this.predecessor = new HashMap<>();
         this.profile = new Profile();
     }
 
-    public Graph(){
-        this.name="No Name";
-        this.nodes=null;
-    }
-
-    public void setNodes(Map<String, Node> nodes){
+    public int shortestPath(String startNode, String goal, Profile newProfile, Map<String, Node> nodes) {
+        if(nodes == null) {
+            return -1;
+        }
         this.nodes.clear();
         this.nodes = nodes;
-    }
 
-    public void shortestPath(String start, String goal, Profile newProfile) {
-        if(nodes == null) {
-            System.out.println("Cannot call algorithm with no building!");
-            return;
+        if(! (nodes.containsKey(startNode) && nodes.containsKey(goal)) ){
+            return -2;
         }
 
         this.end=goal;
         // if profile unchanged & already calculated
         if(null != this.start && this.start.equals(start) && ! profileWasUpdated(newProfile)){
-            System.out.println("RESULT: ");
             printPredecessor();
-            return;
+            return 1;
         }
 
-        this.start = start;
+        this.start = startNode;
         if(! profileWasUpdated(newProfile) && profile.getAlgorithm().equals(Algorithm.FLOYD_WARSHALL)){
-            System.out.println("HERE");
-            this.start = start;
-            System.out.println("RESULT: ");
+            // ALTERNATE PATH ?
             printPredecessor();
-            return;
+            return 1;
         }
 
         initializeNodes();
@@ -63,23 +52,21 @@ public class Graph {
 
 
         if(profile.getAlgorithm().equals(Algorithm.DIJKSTRA)){
-            System.out.println("dijkstra:");
             dijkstra();
             // ALTERNATE PATH ?
-            System.out.println("RESULT: ");
             printPredecessor();
+            return 1;
 
         } else if (profile.getAlgorithm().equals(Algorithm.FLOYD_WARSHALL)) {
-            System.out.println("floyd:");
             floyd_warshall();
             // ALTERNATE PATH ?
-            System.out.println("RESULT: ");
             printPredecessor();
+            return 1;
         }
         else {
             System.out.println("ERROR");
+            return -3;
         }
-
     }
 
     private void initializeNodes() {
