@@ -74,6 +74,18 @@ public class ShortestPathManager {
             case -3:
                 // error
                 break;
+            case 2:
+                System.out.println("No path could be found for these two nodes!");
+                break;
+            case 3:
+                System.out.println("No path could be found for these two nodes with your profile preferences, but the search for an alternate path has been successful.");
+                break;
+            case 4:
+                System.out.println("No path could be found for these two nodes with your profile preferences and the search for an alternate path has been unsuccessful.");
+                break;
+            case 5:
+                // error
+                break;
             default:
                 System.out.println("Something went wrong!");
                 // code block

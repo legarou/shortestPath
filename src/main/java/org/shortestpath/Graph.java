@@ -36,15 +36,19 @@ public class Graph {
         this.end=goal;
         // if profile unchanged & already calculated
         if(null != this.start && this.start.equals(start) && ! profileWasUpdated(newProfile)){
-            printPredecessor();
-            return 1;
+            if(printPredecessor()){
+                return 1;
+            }
+            return 2;
         }
 
         this.start = startNode;
         if(! profileWasUpdated(newProfile) && profile.getAlgorithm().equals(Algorithm.FLOYD_WARSHALL)){
             // ALTERNATE PATH ?
-            printPredecessor();
-            return 1;
+            if(printPredecessor()){
+                return 1;
+            }
+            return 2;
         }
 
         initializeNodes();
@@ -54,14 +58,67 @@ public class Graph {
         if(profile.getAlgorithm().equals(Algorithm.DIJKSTRA)){
             dijkstra();
             // ALTERNATE PATH ?
-            printPredecessor();
-            return 1;
+            if(printPredecessor()){
+                return 1;
+            }
+            // all true but still no path possible
+            if( this.profile.isUseElevator() && this.profile.isGoOutside() && this.profile.isGoOutside()) {
+                return 2;
+            }
+            else if (this.profile.isAlternatePath()){
+                this.profile.setUseElevator(true);
+                this.profile.setGoOutside(true);
+                this.profile.setUseStairs(true);
+                initializeNodes();
+                applyPreference(profile);
+                dijkstra();
+                // ALTERNATE PATH ?
+                applyPreference(newProfile);
+                if(printPredecessor()){
+                    return 3;
+                }
+                else {
+                    return 4;
+                }
+
+            }
+            else {
+                // could search for alternate path but will not
+                return 5;
+            }
 
         } else if (profile.getAlgorithm().equals(Algorithm.FLOYD_WARSHALL)) {
             floyd_warshall();
             // ALTERNATE PATH ?
-            printPredecessor();
-            return 1;
+            if(printPredecessor()){
+                return 1;
+            }
+            // all true but still no path possible
+            if( this.profile.isUseElevator() && this.profile.isGoOutside() && this.profile.isGoOutside()) {
+                return 2;
+            }
+            else if (this.profile.isAlternatePath()){
+                this.profile.setUseElevator(true);
+                this.profile.setGoOutside(true);
+                this.profile.setUseStairs(true);
+                initializeNodes();
+                applyPreference(profile);
+                floyd_warshall();
+                // ALTERNATE PATH ?
+                applyPreference(newProfile);
+                if(printPredecessor()){
+                    return 3;
+                }
+                else {
+                    return 4;
+                }
+
+            }
+            else {
+                // could search for alternate path but will not
+                return 5;
+            }
+
         }
         else {
             System.out.println("ERROR");
@@ -167,34 +224,43 @@ public class Graph {
         System.out.println("Dijkstra: " + Duration.between(starts, ends));
     }
 
-    public void printPredecessor(){
+    public boolean printPredecessor(){
         if(null == profile || null == start || null == end)
-            return;
+            return false;
 
         if(profile.getAlgorithm().equals(Algorithm.DIJKSTRA)) {
             if(predecessor.containsKey(end) && predecessor.containsKey(start)) {
-                printDijkstraResult(end);
+                return printDijkstraResult(end);
             }
         }
         else {
             if(predecessor.containsKey(start+end)) {
-                printFloydResult();
+                return printFloydResult();
             }
         }
+        return false;
     }
 
-    public void printDijkstraResult(String node){
+    public boolean printDijkstraResult(String node){
+        boolean ret = true;
+        if(predecessor.get(node).equals("")){
+            return false;
+        }
         if(! node.equals(start)){
-            printDijkstraResult(predecessor.get(node));
+            ret = printDijkstraResult(predecessor.get(node));
         }
         printNode(node);
+        return ret;
     }
 
-    public void printFloydResult(){
+    public boolean printFloydResult(){
         String previous = "";
         String data;
         String[] splitData;
         data = predecessor.get(start + end);
+        if(data.equals("")){
+            return false;
+        }
         splitData = data.split(";");
         for ( String line : splitData) {
             if(! previous.equals(line)){
@@ -202,6 +268,7 @@ public class Graph {
             }
             previous = line;
         }
+        return true;
     }
 
     public void printNode(String node) {
