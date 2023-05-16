@@ -1,12 +1,12 @@
 name;type;leads outside;neigbours (id + distance)
-A0.03 Haupteingang;DOOR;TRUE;A0.03 Seitenausgang,8,A0.03 Treppe,11,A0.01 STGH,26,A0.15 Lift,29,F.0 Haupteingang,35
+A0.03 Haupteingang;DOOR;TRUE;A0.03 Seitenausgang,8,A0.03 Treppe,11,A0.01 STGH,26,A0.15 Lift,29,F.0 Haupteingang,35,A0.14 Labor,34
 A0.03 Seitenausgang;DOOR;TRUE;A0.04 Labor Ausgang,35,F.0 Haupteingang,30
 A0.03 Treppe;STAIRS;FALSE;A0.03 Seitenausgang,3,A0.03 Haupteingang,13,A0.15 Lift,21
 A0.01 STGH;STAIRS;FALSE;A0.03 Haupteingang,26,A1.00 STGH,20
 A0.15 Lift;ELEVATOR;FALSE;A0.03 Haupteingang,29,A0.03 Treppe,21,A0.04 Labor,6,A0.14 Labor,7,A1.00 Lift,8
 A0.04 Labor;ROOM;FALSE;A0.04 Labor Ausgang,1,A0.14 Labor,6,A0.15 Lift,6,A0.13 WC F,16
 A0.04 Labor Ausgang;DOOR;TRUE;A0.05 Cafeteria Eingang,25,A0.03 Seitenausgang,35
-A0.14 Labor;ROOM;FALSE;A0.13 WC F,16,A0.04 Labor,6,A0.15 Lift,7
+A0.14 Labor;ROOM;FALSE;A0.13 WC F,16,A0.04 Labor,6,A0.15 Lift,7,A0.03 Haupteingang,34
 A0.13 WC F;ROOM;FALSE;A0.12 WC M,2,A0.14 Labor,12,A0.04 Labor,16
 A0.12 WC M;ROOM;FALSE;A0.05 Cafeteria,13,A0.13 WC F,2
 A0.05 Cafeteria;ROOM;FALSE;A0.05 Cafeteria Eingang,1,A0.06 Mensa,4,A0.12 WC M,13
@@ -31,8 +31,8 @@ A1.12 Labor;ROOM;FALSE;A1.02 STGH,8,A1.11 Labor,3,A1.02 Lift,9
 A1.02 Lift;ELEVATOR;FALSE;A1.12 Labor,9,A1.11 Labor,6,A1.02 STGH,4,A0.16 Lift,8,A2.01 Lift,8
 A1.04B Hoersaal;ROOM;FALSE;A2.00 Treppe (Links),5,A3.00 Lift,17,A3.00 Treppe (links),23,A3.00 STGH,17
 A2.00 Lift;ELEVATOR;FALSE;A2.00 Treppe (Links),13,A2.00 STGH,11,A2.12 Labor,17,A2.00 Treppe (Mitte),11,A3.00 Lift,8,A1.00 Lift,8,F.2. Bruecke,9
-A2.00 Treppe (Links);STAIRS;FALSE;A2.00 Lift,13,A1.04B Hoersaal,5,F.2. Bruecke,9
-A2.00 STGH;STAIRS;FALSE;A2.00 Lift,13,A1.00 STGH,20,A3.00 STGH,20
+A2.00 Treppe (Links);STAIRS;FALSE;A2.00 Lift,13,A1.04B Hoersaal,5,F.2. Bruecke,9,A2.00 STGH,18
+A2.00 STGH;STAIRS;FALSE;A2.00 Lift,13,A1.00 STGH,20,A3.00 STGH,20,A2.00 Treppe (Links),18,A2.00 Treppe (Mitte),16
 A2.12 Labor;ROOM;FALSE;A2.00 Lift,17,A2.00 WC F,5,A2.00 Treppe (Mitte),13
 A2.07 SEM;ROOM;FALSE;A2.00 WC M,13,A2.00 WC X,10,A2.06 SEM,2,A2.00 Treppe (Rechts),6
 A2.06 SEM;ROOM;FALSE;A2.07 SEM,2,A2.00 Treppe (Rechts),6,A2.01 Lift,8,A2.02 STGH,4
@@ -41,12 +41,12 @@ A2.00 WC M;ROOM;FALSE;A2.00 WC F,6,A2.07 SEM,13,A2.00 WC X,3
 A2.00 WC X;ROOM;FALSE;A2.00 WC F,5,A2.00 WC M,3,A2.07 SEM,10
 A2.00 Treppe (Rechts);STAIRS;FALSE;A2.07 SEM,6,A2.06 SEM,6
 A2.01 Lift;ELEVATOR;FALSE;A2.06 SEM,4,A1.02 Lift,8,A3.01 Lift,8,Uebergang Gebaeude A,5
-A2.02 STGH;STAIRS;FALSE;A2.06 SEM,4,A1.02 STGH,20,A3.02 STGH,20
-A2.00 Treppe (Mitte);STAIRS;FALSE;A2.00 Lift,11,A2.12 Labor,13
+A2.02 STGH;STAIRS;FALSE;A2.06 SEM,4,A1.02 STGH,20,A3.02 STGH,20,Uebergang Gebaeude A,7
+A2.00 Treppe (Mitte);STAIRS;FALSE;A2.00 Lift,11,A2.12 Labor,13,A2.00 STGH,16
 A3.00 Lift;ELEVATOR;FALSE;A3.00 Treppe (mitte),15,A3.15 Hoersaal,24,A1.04B Hoersaal,17,A3.00 Treppe (links),20,A4.00 Lift (Links),8,A2.00 Lift,8
-A3.00 Treppe (links);STAIRS;FALSE;A3.00 Lift,20,A1.04B Hoersaal,23
+A3.00 Treppe (links);STAIRS;FALSE;A3.00 Lift,20,A1.04B Hoersaal,23,A3.00 STGH,25
 A3.00 Treppe (mitte);STAIRS;FALSE;A3.01 Treppe (rechts),30,A3.15 Hoersaal,8
-A3.00 STGH;STAIRS;FALSE;A1.04B Hoersaal,17,A3.00 Lift,12,A3.15 Hoersaal,25,A2.00 STGH,20,A4.00 STGH (Links),20
+A3.00 STGH;STAIRS;FALSE;A1.04B Hoersaal,17,A3.00 Lift,12,A3.15 Hoersaal,25,A2.00 STGH,20,A4.00 STGH (Links),20,A3.00 Treppe (links),25
 A3.15 Hoersaal;ROOM;FALSE;A3.00 Lift,24,A3.00 STGH,25,A3.00 Treppe (mitte),8,A3.14 Hoersaal,18
 A3.14 Hoersaal;ROOM;FALSE;A3.15 Hoersaal,18,A3.13 Hoersaal,3
 A3.13 Hoersaal;ROOM;FALSE;A3.14 Hoersaal,3,A3.01 Treppe (rechts),14,A3.11 Seminarraum,19,A3.06 Seminarraum,19
@@ -173,7 +173,7 @@ B2.01 WC M;ROOM;FALSE;B2.01 UEB,10
 B2.02 WC M;ROOM;FALSE;B2.03 WC F,45,B2.04 WC F,5
 B2.03 WC F;ROOM;FALSE;B2 Bibliothek,8,B2.02 WC M,45
 B2.04 WC F;ROOM;FALSE;B2.02 UEB,24,B2.03 SEM,14,B2.02 WC M,4
-Uebergang Gebaeude A;PATH;FALSE;B2.01 UEB,22,B2 Bibliothek,18,A2.01 Lift,5
+Uebergang Gebaeude A;PATH;FALSE;B2.01 UEB,22,B2 Bibliothek,18,A2.01 Lift,5,A2.02 STGH,7
 B2.05 WC X;ROOM;FALSE;B2.03 SEM,5,B2.04 SEM,5,B2.05 SEM,5
 F.0 Haupteingang;DOOR;TRUE;F.0 STGH Eingang,15,F.0 Anmeldung,23,F.0.02 Hoersaal,21,A0.03 Haupteingang,35
 F.0 Haupteingang Gegenueber;DOOR;TRUE;F.0 STGH Gegenueber,5,F.0 Haupteingang,40,A0.03 Haupteingang,60
@@ -202,20 +202,20 @@ F.2 STGH Eingang;STAIRS;FALSE;F.1 STGH Eingang,20,F.3 STGH Eingang,20,F.2 Elevat
 F.2 STGH Festsaal;STAIRS;FALSE;F.1 STGH Festsaal,20,F.3 STGH Festsaal,20,F.2.04 Studierraum,7
 F.2 STGH Gegenueber;STAIRS;FALSE;F.1 STGH Gegenueber,20,F.3 STGH Gegenueber,20
 F.2 Elevator;ELEVATOR;FALSE;F.2 WC F,2,F.2 STGH Eingang,5,F.2.01 Hoersaal,13,F.1 Elevator,8,F.3 Elevator,8
-F.2 WC F;ROOM;FALSE;F.2 WC M,1,F.2 Elevator,2
-F.2 WC M;ROOM;FALSE;F.2 WC F,1
+F.2 WC F;ROOM;FALSE;F.2 WC M,1,F.2 Elevator,2,F.2 STGH Eingang,6
+F.2 WC M;ROOM;FALSE;F.2 WC F,1,F.2 STGH Eingang,6
 F.2.01 Hoersaal;ROOM;FALSE;F.2.02 EDV-Lehrsaal,5,F.2 Elevator,12,F.2 STGH Eingang,13
 F.2.02 EDV-Lehrsaal;ROOM;FALSE;F.2.03 Hoersaal,7,F.2.01 Hoersaal,5
 F.2.03 Hoersaal;ROOM;FALSE;F.2.04 Studierraum,10,F.2.02 EDV-Lehrsaal,7
 F.2.04 Studierraum;ROOM;FALSE;F.2.03 Hoersaal,4,F.2 STGH Festsaal,7
 F.2. Bruecke;PATH;FALSE;F.2 STGH Eingang,9,A2.00 Lift,9,A2.00 Treppe (Links),9
-F.3 STGH Eingang;STAIRS;FALSE;F.2 STGH Eingang,20,F.4 STGH Eingang,20,F.3 Elevator,5,F.3 WC M,6
+F.3 STGH Eingang;STAIRS;FALSE;F.2 STGH Eingang,20,F.4 STGH Eingang,20,F.3 Elevator,5,F.3 WC M,6,F.3 WC F,6,F.3.01 Buero,21
 F.3 STGH Festsaal;STAIRS;FALSE;F.2 STGH Festsaal,20,F.4 STGH Festsaal,20,F.3.07 Buero,10,F.3.06 Buero,10
 F.3 STGH Gegenueber;STAIRS;FALSE;F.2 STGH Gegenueber,20,F.4 STGH Gegenueber,20
 F.3 Elevator;ELEVATOR;FALSE;F.2 Elevator,8,F.4 Elevator,8,F.3 STGH Eingang,5,F.3 WC F,3
-F.3 WC F;ROOM;FALSE;F.3 WC M,2,F.3 Elevator,2
+F.3 WC F;ROOM;FALSE;F.3 WC M,2,F.3 Elevator,2,F.3 STGH Eingang,6
 F.3 WC M;ROOM;FALSE;F.3 WC F,2,F.3 STGH Eingang,6
-F.3.01 Buero;ROOM;FALSE;F.3.02 Buero,5,F.3.10 Buero,7,F.3 Elevator,16
+F.3.01 Buero;ROOM;FALSE;F.3.02 Buero,5,F.3.10 Buero,7,F.3 Elevator,16,F.3 STGH Eingang,21
 F.3.02 Buero;ROOM;FALSE;F.3.03 Buero,4,F.3.01 Buero,5,F.3.10 Buero,7
 F.3.03 Buero;ROOM;FALSE;F.3.04 Buero,6,F.3.02 Buero,4,F.3.09 Teekueche,5,F.3.08 Besprechungsraum,7
 F.3.04 Buero;ROOM;FALSE;F.3.06 Buero,10,F.3.03 Buero,6,F.3.07 Buero,5,F.3.08 Besprechungsraum,4
@@ -224,13 +224,13 @@ F.3.07 Buero;ROOM;FALSE;F.3.08 Besprechungsraum,3,F.3.06 Buero,3,F.3 STGH Festsa
 F.3.08 Besprechungsraum;ROOM;FALSE;F.3.09 Teekueche,3,F.3.03 Buero,7,F.3.04 Buero,4,F.3.07 Buero,3
 F.3.09 Teekueche;ROOM;FALSE;F.3.10 Buero,4,F.3.08 Besprechungsraum,3,F.3.03 Buero,5
 F.3.10 Buero;ROOM;FALSE;F.3.09 Teekueche,4,F.3.01 Buero,7,F.3.02 Buero,7
-F.4 STGH Eingang;STAIRS;FALSE;F.3 STGH Eingang,20,F.5 STGH Eingang,20,F.4 Elevator,4,F.4 WC F,5,F.4 WC M,6
+F.4 STGH Eingang;STAIRS;FALSE;F.3 STGH Eingang,20,F.5 STGH Eingang,20,F.4 Elevator,4,F.4 WC F,5,F.4 WC M,6,F.4.20 Seminarraum,18,F.4.01 EDV-Unterrichtsraum,26
 F.4 STGH Festsaal;STAIRS;FALSE;F.4.05 Lesezone,7,F.4.04 Seminarraum,7,F.3 STGH Festsaal,20,F.5 STGH Festsaal,20
 F.4 STGH Gegenueber;STAIRS;FALSE;F.3 STGH Gegenueber,20,F.5 STGH Gegenueber,20,F.4.27 Seminarraum,13
 F.4 Elevator;ELEVATOR;FALSE;F.3 Elevator,8,F.5 Elevator,8,F.4 STGH Eingang,4,F.4 WC F,1,F.4.08 Uebungsraum,14,F.4.01 EDV-Unterrichtsraum,14
 F.4 WC F;ROOM;FALSE;F.4 WC M,1,F.4 Elevator,1,F.4 STGH Eingang,5
 F.4 WC M;ROOM;FALSE;F.4 WC F,2,F.4.20 Seminarraum,10,F.4 STGH Eingang,6
-F.4.01 EDV-Unterrichtsraum;ROOM;FALSE;F.4 Elevator,14,F.4.02 EDV-Unterrichtsraum,3,F.4.08 Uebungsraum,4,F.4.07 Uebungsraum,6
+F.4.01 EDV-Unterrichtsraum;ROOM;FALSE;F.4 Elevator,14,F.4.02 EDV-Unterrichtsraum,3,F.4.08 Uebungsraum,4,F.4.07 Uebungsraum,6,F.4 STGH Eingang,26
 F.4.02 EDV-Unterrichtsraum;ROOM;FALSE;F.4.01 EDV-Unterrichtsraum,4,F.4.08 Uebungsraum,3,F.4.03 Uebungsraum,16,F.4.06 Uebungsraum,18,F.4.07 Uebungsraum,3
 F.4.03 Uebungsraum;ROOM;FALSE;F.4.02 EDV-Unterrichtsraum,16,F.4.07 Uebungsraum,16,F.4.06 Uebungsraum,4,F.4.05 Lesezone,5,F.4.04 Seminarraum,2
 F.4.04 Seminarraum;ROOM;FALSE;F.4.03 Uebungsraum,2,F.4.05 Lesezone,4,F.4.06 Uebungsraum,6,F.4 STGH Festsaal,7
@@ -238,7 +238,7 @@ F.4.05 Lesezone;ROOM;FALSE;F.4 STGH Festsaal,7,F.4.04 Seminarraum,4,F.4.06 Uebun
 F.4.06 Uebungsraum;ROOM;FALSE;F.4.05 Lesezone,3,F.4.04 Seminarraum,6,F.4.03 Uebungsraum,4,F.4.02 EDV-Unterrichtsraum,16,F.4.07 Uebungsraum,16
 F.4.07 Uebungsraum;ROOM;FALSE;F.4.06 Uebungsraum,16,F.4.03 Uebungsraum,16,F.4.02 EDV-Unterrichtsraum,4,F.4.01 EDV-Unterrichtsraum,5,F.4.08 Uebungsraum,3
 F.4.08 Uebungsraum;ROOM;FALSE;F.4.07 Uebungsraum,3,F.4.02 EDV-Unterrichtsraum,3,F.4.01 EDV-Unterrichtsraum,4,F.4 Elevator,14
-F.4.20 Seminarraum;ROOM;FALSE;F.4.21 Teekueche,4,F.4.22 Uebungsraum,9,F.4 WC M,10
+F.4.20 Seminarraum;ROOM;FALSE;F.4.21 Teekueche,4,F.4.22 Uebungsraum,9,F.4 WC M,10,F.4 STGH Eingang,18
 F.4.21 Teekueche;ROOM;FALSE;F.4.22 Uebungsraum,4,F.4.20 Seminarraum,4
 F.4.22 Uebungsraum;ROOM;FALSE;F.4.23 EDV-Unterrichtsraum,2,F.4.21 Teekueche,4,F.4.20 Seminarraum,9
 F.4.23 EDV-Unterrichtsraum;ROOM;FALSE;F.4.24 EDV-Unterrichtsraum,5,F.4.23 EDV-Unterrichtsraum,5
@@ -246,13 +246,13 @@ F.4.24 EDV-Unterrichtsraum;ROOM;FALSE;F.4.25 EDV-Unterrichtsraum,5,F.4.23 EDV-Un
 F.4.25 EDV-Unterrichtsraum;ROOM;FALSE;F.4.26 EDV-Unterrichtsraum,5,F.4.24 EDV-Unterrichtsraum,5
 F.4.26 EDV-Unterrichtsraum;ROOM;FALSE;F.4.27 Seminarraum,5,F.4.25 EDV-Unterrichtsraum,5
 F.4.27 Seminarraum;ROOM;FALSE;F.4 STGH Gegenueber,13,F.4.26 EDV-Unterrichtsraum,5
-F.5 STGH Eingang;STAIRS;FALSE;F.5 Elevator,5,F.5 WC F,2
+F.5 STGH Eingang;STAIRS;FALSE;F.5 Elevator,5,F.5 WC F,2,F.5 WC M,2,F.5.20 Buero,18,F.5.01 Uebungsraum,26
 F.5 STGH Festsaal;STAIRS;FALSE;F.5.06 Labor EDA2,9,F.5.07 Buero,8,F.6 STGH Festsaal,20,F.4 STGH Festsaal,20
 F.5 STGH Gegenueber;STAIRS;FALSE;F.5.28 Besprechungsraum,8,F.5.29 Lektoren,8,F.6 STGH Gegenueber,20,F.4 STGH Gegenueber,20
 F.5 Elevator;ELEVATOR;FALSE;F.4 Elevator,8,F.6 Elevator,8,F.5 STGH Eingang,5,F.5 WC F,2,F.5.01 Uebungsraum,10
 F.5 WC F;ROOM;FALSE;F.5 WC M,1,F.5 Elevator,2,F.5 STGH Eingang,5
-F.5 WC M;ROOM;FALSE;F.5 WC F,1,F.5.36 Teekueche,9,F.5.20 Buero,9
-F.5.01 Uebungsraum;ROOM;FALSE;F.5 Elevator,10,F.5.02 Buero,3,F.5.12 Buero,4
+F.5 WC M;ROOM;FALSE;F.5 WC F,1,F.5.36 Teekueche,9,F.5.20 Buero,9,F.5 Elevator,5,F.5 WC F,2,F.5 WC M,2,F.5.20 Buero,18,F.5.01 Uebungsraum,26
+F.5.01 Uebungsraum;ROOM;FALSE;F.5 Elevator,10,F.5.02 Buero,3,F.5.12 Buero,4,F.5 STGH Eingang,26
 F.5.02 Buero;ROOM;FALSE;F.5.01 Uebungsraum,3,F.5.03 Buero,5,F.5.12 Buero,3,F.5.11 Uebungsraum,4
 F.5.03 Buero;ROOM;FALSE;F.5.02 Buero,5,F.5.11 Uebungsraum,4,F.5.10 Buero,3,F.5.04 Buero,4
 F.5.04 Buero;ROOM;FALSE;F.5.03 Buero,4,F.5.05 Archiv,3,F.5.10 Buero,5,F.5.09 Buero,5
@@ -264,7 +264,7 @@ F.5.09 Buero;ROOM;FALSE;F.5.08 Buero,5,F.5.10 Buero,6,F.5.05 Archiv,3,F.5.04 Bue
 F.5.10 Buero;ROOM;FALSE;F.5.09 Buero,6,F.5.11 Uebungsraum,8,F.5.04 Buero,5,F.5.05 Archiv,7,F.5.03 Buero,3
 F.5.11 Uebungsraum;ROOM;FALSE;F.5.10 Buero,8,F.5.03 Buero,4,F.5.02 Buero,4,F.5.12 Buero,3
 F.5.12 Buero;ROOM;FALSE;F.5.11 Uebungsraum,3,F.5.02 Buero,3,F.5.01 Uebungsraum,4
-F.5.20 Buero;ROOM;FALSE;F.5 WC M,9,F.5.36 Teekueche,3,F.5.35 Buero,5,F.5.21 Buero,5
+F.5.20 Buero;ROOM;FALSE;F.5 WC M,9,F.5.36 Teekueche,3,F.5.35 Buero,5,F.5.21 Buero,5,F.5 STGH Eingang,18
 F.5.21 Buero;ROOM;FALSE;F.5.20 Buero,5,F.5.22 Buero,5,F.5.35 Buero,3,F.5.36 Teekueche,5,F.5.34 Buero,5
 F.5.22 Buero;ROOM;FALSE;F.5.21 Buero,5,F.5.23 Lektorenzimmer,5,F.5.34 Buero,2,F.5.35 Buero,5,F.5.33 Buero,4
 F.5.23 Lektorenzimmer;ROOM;FALSE;F.5.22 Buero,5,F.5.24 Besprechungsraum,6,F.5.32 Buero,5,F.5.33 Buero,3,F.5.34 Buero,5

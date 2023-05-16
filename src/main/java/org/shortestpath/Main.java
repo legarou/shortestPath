@@ -86,6 +86,34 @@ public class Main {
                     shortestPathManager.setProfile(profileAnswers[0], profileAnswers[1], profileAnswers[2], profileAnswers[3], profileQuestions[4]);
                 }
             }
+            else if (input.equalsIgnoreCase("ALGORITHM")) {
+                System.out.println("Which Algorithm would you like to use, Dijkstra or FLoyd-Warshall? \nPlease enter Dijkstra or Floyd");
+                while(! input.equalsIgnoreCase("quit")){
+                    input = reader.readLine();
+                    if (input.equalsIgnoreCase("dijkstra") || input.equalsIgnoreCase("d") || input.equalsIgnoreCase("floyd") || input.equalsIgnoreCase("f") || input.equalsIgnoreCase("quit")) {
+                        switch (input.charAt(0)) {
+                            case 'd':
+                            case 'D':   profileQuestions[4] = "DIJKSTRA";
+                                        break;
+                            case 'f':
+                            case 'F':   profileQuestions[4] = "FLOYD_WARSHALL";
+                                        break;
+                            case 'q':
+                            case 'Q':   break;
+                        }
+                        break;
+                    }
+                    else {
+                        System.out.println("Wrong answer, please try again with '" + "dijsktra" + "', '" + "d" + "', '" + "floyd" + "', '" + "f" + ", 'quit' or 'return' in order to get to the previous question.");
+                    }
+                }
+                if(input.equalsIgnoreCase("quit")){
+                    System.out.println("Profile update aborted.");
+                }
+                else {
+                    shortestPathManager.setProfileAlgorithm(profileQuestions[4]);
+                }
+            }
             else if (input.equalsIgnoreCase("READ")) {
                 System.out.println("Please enter the filename: (example: building.txt)");
                 input = reader.readLine();
@@ -158,6 +186,7 @@ public class Main {
                         }
                         else{
                             shortestPathManager.shortestPathWithNewProfile(from, to, profileAnswers[0], profileAnswers[1], profileAnswers[2], profileAnswers[3], profileQuestions[4]);
+                            input="new";
                         }
 
                     }

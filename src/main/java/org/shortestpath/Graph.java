@@ -217,7 +217,7 @@ public class Graph {
         Map<String, Integer> distanceMap = new HashMap<>();
 
 
-        for(Map.Entry<String,Node> node : shallowCopy.entrySet())
+        for(Map.Entry<String,Node> node : nodes.entrySet())
         {
             if(node.getValue().isVisited()) {
                 shallowCopy.remove(node.getKey());

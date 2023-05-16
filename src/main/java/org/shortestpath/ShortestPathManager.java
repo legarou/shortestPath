@@ -25,6 +25,14 @@ public class ShortestPathManager {
         fileManager.setProfile(profile);
     }
 
+    public void setProfileAlgorithm(String algorithm) throws IOException {
+        if(null == profile){
+            profile = new Profile();
+        }
+        profile.setAlgorithmFromString(algorithm);
+        fileManager.setProfile(profile);
+    }
+
     public void readBuilding(String filepath){
         if(! fileManager.readBuilding(filepath)){
             System.out.println("File " + filepath + " could not be found or the provided file does not fulfill the required format.");
@@ -75,7 +83,8 @@ public class ShortestPathManager {
     public void shortestPathWithNewProfile(String start, String end, boolean useElevator, boolean useStairs, boolean goOutside, boolean alternatePath, String algorithm){
         Profile newProfile = new Profile(useElevator, useStairs, goOutside, alternatePath, algorithm);
 
-        int pathCase = graph.shortestPath(start, end, newProfile, fileManager.getBuilding());
+        Graph newGraph = new Graph();
+        int pathCase = newGraph.shortestPath(start, end, newProfile, fileManager.getBuilding());
 
         switch (pathCase) {
             case 1:
