@@ -23,6 +23,7 @@ public class ShortestPathManager {
         profile.setUseElevator(useElevator);
         profile.setUseStairs(useStairs);
         fileManager.setProfile(profile);
+        System.out.println("Profile has been set.");
     }
 
     public void setProfileAlgorithm(String algorithm) throws IOException {
@@ -31,12 +32,14 @@ public class ShortestPathManager {
         }
         profile.setAlgorithmFromString(algorithm);
         fileManager.setProfile(profile);
+        System.out.println("Algorithm has been set.");
     }
 
     public void readBuilding(String filepath){
         if(! fileManager.readBuilding(filepath)){
             System.out.println("File " + filepath + " could not be found or the provided file does not fulfill the required format.");
         }
+        System.out.println("Building has been successfully scanned.");
     }
 
     public boolean readProfile() throws IOException {
@@ -45,7 +48,9 @@ public class ShortestPathManager {
     }
 
     public void printBuilding(){
-        fileManager.printBuilding();
+        if(! fileManager.printBuilding()){
+            System.out.println("There is no building to print! A building has to be read first.");
+        }
     }
 
     public void shortestPathWithOwnProfile(String start, String end){
@@ -60,6 +65,7 @@ public class ShortestPathManager {
 
         switch (pathCase) {
             case 1:
+                graph.printPredecessor();
                 //n success
                 break;
             case 0:
@@ -79,6 +85,7 @@ public class ShortestPathManager {
                 break;
             case 3:
                 System.out.println("No path could be found for these two nodes with your profile preferences, but the search for an alternate path has been successful.");
+                graph.printPredecessor();
                 break;
             case 4:
                 System.out.println("No path could be found for these two nodes with your profile preferences and the search for an alternate path has been unsuccessful.");
@@ -101,6 +108,7 @@ public class ShortestPathManager {
         switch (pathCase) {
             case 1:
                 //n success
+                graph.printPredecessor();
                 break;
             case 0:
                 // else

@@ -162,16 +162,17 @@ public class FileManager {
 
     }
 
-    public void printBuilding() {
+    public boolean printBuilding() {
         if(! nodes.isEmpty()){
+            System.out.println("Printing all building nodes:");
             for (Map.Entry<String,Node> node : nodes.entrySet()) {
-                System.out.println(node.getValue().toString());
+                System.out.println(node.getValue().getName());
             }
+            return true;
         }
         else {
-            System.out.println("There is no building to print! A building has to be read first.");
+            return false;
         }
-
     }
 
     public Map<String, Node> getNodes(){

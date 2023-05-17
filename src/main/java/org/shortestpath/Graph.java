@@ -36,7 +36,8 @@ public class Graph {
         this.end=goal;
         // if profile unchanged & already calculated
         if(null != this.start && this.start.equals(start) && ! profileWasUpdated(newProfile)){
-            if(printPredecessor()){
+            if(hasPath()){
+                //printPredecessor();
                 return 1;
             }
             return 2;
@@ -45,20 +46,23 @@ public class Graph {
         this.start = startNode;
         if(! profileWasUpdated(newProfile) && profile.getAlgorithm().equals(Algorithm.FLOYD_WARSHALL)){
             // ALTERNATE PATH ?
-            if(printPredecessor()){
+            if(hasPath()){
+                //printPredecessor();
                 return 1;
             }
             return 2;
         }
 
         initializeNodes();
-        applyPreference(newProfile);
+        applyProfile(newProfile);
+        applyPreference();
 
 
         if(profile.getAlgorithm().equals(Algorithm.DIJKSTRA)){
             dijkstra();
             // ALTERNATE PATH ?
-            if(printPredecessor()){
+            if(hasPath()){
+                //printPredecessor();
                 return 1;
             }
             // all true but still no path possible
@@ -70,11 +74,11 @@ public class Graph {
                 this.profile.setGoOutside(true);
                 this.profile.setUseStairs(true);
                 initializeNodes();
-                applyPreference(profile);
+                applyPreference();
                 dijkstra();
                 // ALTERNATE PATH ?
-                applyPreference(newProfile);
-                if(printPredecessor()){
+                if(hasPath()){
+                    //printPredecessor();
                     return 3;
                 }
                 else {
@@ -90,7 +94,8 @@ public class Graph {
         } else if (profile.getAlgorithm().equals(Algorithm.FLOYD_WARSHALL)) {
             floyd_warshall();
             // ALTERNATE PATH ?
-            if(printPredecessor()){
+            if(hasPath()){
+                //printPredecessor();
                 return 1;
             }
             // all true but still no path possible
@@ -101,12 +106,12 @@ public class Graph {
                 this.profile.setUseElevator(true);
                 this.profile.setGoOutside(true);
                 this.profile.setUseStairs(true);
-                initializeNodes();
-                applyPreference(profile);
+                initializeNodes();;
+                applyPreference();
                 floyd_warshall();
                 // ALTERNATE PATH ?
-                applyPreference(newProfile);
-                if(printPredecessor()){
+                if(hasPath()){
+                    //printPredecessor();
                     return 3;
                 }
                 else {
@@ -145,15 +150,9 @@ public class Graph {
                 && (this.profile.getAlgorithm().equals(newProfile.getAlgorithm())) );
     }
 
-    public void applyPreference(Profile newProfile){
+    public void applyPreference(){
         if(null == profile)
             return;
-
-        this.profile.setAlgorithm(newProfile.getAlgorithm());
-        this.profile.setGoOutside(newProfile.isGoOutside());
-        this.profile.setUseStairs(newProfile.isUseStairs());
-        this.profile.setAlternatePath(newProfile.isAlternatePath());
-        this.profile.setUseElevator(newProfile.isUseElevator());
 
         for(Map.Entry<String,Node> variable : nodes.entrySet())
         {
@@ -165,6 +164,17 @@ public class Graph {
                 node.setVisited(true);
             }
         }
+    }
+
+    public void applyProfile(Profile newProfile){
+        if(null == profile)
+            return;
+
+        this.profile.setAlgorithm(newProfile.getAlgorithm());
+        this.profile.setGoOutside(newProfile.isGoOutside());
+        this.profile.setUseStairs(newProfile.isUseStairs());
+        this.profile.setAlternatePath(newProfile.isAlternatePath());
+        this.profile.setUseElevator(newProfile.isUseElevator());
     }
 
     public void dijkstra(){
@@ -224,57 +234,6 @@ public class Graph {
         System.out.println("Dijkstra: " + Duration.between(starts, ends));
     }
 
-    public boolean printPredecessor(){
-        if(null == profile || null == start || null == end)
-            return false;
-
-        if(profile.getAlgorithm().equals(Algorithm.DIJKSTRA)) {
-            if(predecessor.containsKey(end) && predecessor.containsKey(start)) {
-                return printDijkstraResult(end);
-            }
-        }
-        else {
-            if(predecessor.containsKey(start+end)) {
-                return printFloydResult();
-            }
-        }
-        return false;
-    }
-
-    public boolean printDijkstraResult(String node){
-        boolean ret = true;
-        if(predecessor.get(node).equals("")){
-            return false;
-        }
-        if(! node.equals(start)){
-            ret = printDijkstraResult(predecessor.get(node));
-        }
-        printNode(node);
-        return ret;
-    }
-
-    public boolean printFloydResult(){
-        String previous = "";
-        String data;
-        String[] splitData;
-        data = predecessor.get(start + end);
-        if(data.equals("")){
-            return false;
-        }
-        splitData = data.split(";");
-        for ( String line : splitData) {
-            if(! previous.equals(line)){
-                printNode(line);
-            }
-            previous = line;
-        }
-        return true;
-    }
-
-    public void printNode(String node) {
-        System.out.println(nodes.get(node));
-    }
-
     public void floyd_warshall(){
         Instant starts = Instant.now();
 
@@ -330,6 +289,116 @@ public class Graph {
         }
         Instant ends = Instant.now();
         System.out.println("Floyd: " + Duration.between(starts, ends));
+    }
+
+    public String getPath(){
+        if(null == profile || null == start || null == end)
+            return null;
+
+        if(profile.getAlgorithm().equals(Algorithm.DIJKSTRA)) {
+            if(predecessor.containsKey(end) && predecessor.containsKey(start)) {
+                return getDijkstraResult(end);
+            }
+        } else {
+            if(predecessor.containsKey(start+end)) {
+                return predecessor.get(start + end);
+            }
+        }
+
+        return null;
+    }
+
+    public String getDijkstraResult(String node){
+        if(node.equals(start)){
+            return node;
+        }
+        else if(predecessor.get(node).equals("")){
+            return "";
+        }
+        else if(! node.equals(start)){
+            return getDijkstraResult(predecessor.get(node)) + ";" + node;
+        }
+        else {
+            return "";
+        }
+    }
+
+
+
+    public boolean printPredecessor(){
+        if(null == profile || null == start || null == end)
+            return false;
+
+        if(profile.getAlgorithm().equals(Algorithm.DIJKSTRA)) {
+            if(predecessor.containsKey(end) && predecessor.containsKey(start)) {
+                return printDijkstraResult(end);
+            }
+        }
+        else {
+            if(predecessor.containsKey(start+end)) {
+                return printFloydResult();
+            }
+        }
+        return false;
+    }
+    public boolean printFloydResult(){
+        String previous = "";
+        String data;
+        String[] splitData;
+        data = predecessor.get(start + end);
+        if(data.equals("")){
+            return false;
+        }
+        splitData = data.split(";");
+        for ( String line : splitData) {
+            if(! previous.equals(line)){
+                printNode(line);
+            }
+            previous = line;
+        }
+        return true;
+    }
+
+    public boolean printDijkstraResult(String node){
+        if(node.equals(start)){
+            printNode(node);
+            return true;
+        }
+        else if(predecessor.get(node).equals("")){
+            return false;
+        }
+
+        if(! node.equals(start)){
+            printDijkstraResult(predecessor.get(node));
+        }
+        printNode(node);
+        return true;
+    }
+
+    public void printNode(String node) {
+        //System.out.println(nodes.get(node));
+        if(node.equals(start)){
+            System.out.println("Start: " +  node + " (" + nodes.get(node).getType() + ")");
+        }
+        else{
+            System.out.println("-> " +  node + " (" + nodes.get(node).getType() + ")");
+        }
+
+    }
+
+    public boolean hasPath(){
+        if(null == profile || null == start || null == end)
+            return false;
+
+        if(profile.getAlgorithm().equals(Algorithm.DIJKSTRA)) {
+            if(predecessor.containsKey(end) && predecessor.containsKey(start)) {
+                return ! (null == getDijkstraResult(end) || getDijkstraResult(end).equals(""));
+            }
+        }
+        else {
+            return predecessor.containsKey(start+end);
+        }
+        return false;
     }
 
 }
