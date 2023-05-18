@@ -35,7 +35,7 @@ public class Graph {
 
         this.end=goal;
         // if profile unchanged & already calculated
-        if(null != this.start && this.start.equals(start) && ! profileWasUpdated(newProfile)){
+        if(null != this.start && this.start.equals(startNode) && ! profileWasUpdated(newProfile)){
             if(hasPath()){
                 //printPredecessor();
                 return 1;

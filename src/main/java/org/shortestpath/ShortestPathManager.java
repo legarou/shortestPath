@@ -107,8 +107,8 @@ public class ShortestPathManager {
 
         switch (pathCase) {
             case 1:
+                newGraph.printPredecessor();
                 //n success
-                graph.printPredecessor();
                 break;
             case 0:
                 // else
@@ -120,6 +120,19 @@ public class ShortestPathManager {
                 System.out.println("Could not calculate the current path, at least one of the nodes does not exist in the current building.");
                 break;
             case -3:
+                // error
+                break;
+            case 2:
+                System.out.println("No path could be found for these two nodes!");
+                break;
+            case 3:
+                System.out.println("No path could be found for these two nodes with your profile preferences, but the search for an alternate path has been successful.");
+                newGraph.printPredecessor();
+                break;
+            case 4:
+                System.out.println("No path could be found for these two nodes with your profile preferences and the search for an alternate path has been unsuccessful.");
+                break;
+            case 5:
                 // error
                 break;
             default:
