@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Graph {
+public class AlgorithmService {
 
     private Map<String, Node> nodes; // building
     private String start;
@@ -15,7 +15,7 @@ public class Graph {
     private Profile profile;
     private Map<String, String> predecessor;
 
-    public Graph(){
+    public AlgorithmService(){
         this.nodes= new HashMap<>();
         this.start=null;
         this.predecessor = new HashMap<>();
@@ -178,7 +178,6 @@ public class Graph {
     }
 
     public void dijkstra(){
-        Instant starts = Instant.now();
         //initialize
         List<Node> queue = new ArrayList<>();
         predecessor.clear();
@@ -230,13 +229,9 @@ public class Graph {
             }
             // GO OUTSIDE
         }
-        Instant ends = Instant.now();
-        System.out.println("Dijkstra: " + Duration.between(starts, ends));
     }
 
     public void floyd_warshall(){
-        Instant starts = Instant.now();
-
         //initialize
         predecessor.clear();
         Map<String, Node> shallowCopy = new HashMap(nodes);
@@ -287,8 +282,6 @@ public class Graph {
                 }
             }
         }
-        Instant ends = Instant.now();
-        System.out.println("Floyd: " + Duration.between(starts, ends));
     }
 
     public String getPath(){
