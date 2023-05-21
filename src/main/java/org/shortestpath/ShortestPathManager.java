@@ -1,15 +1,16 @@
 package org.shortestpath;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class ShortestPathManager {
-    FileManager fileManager;
-    Graph graph;
+    FileService fileManager;
+    AlgorithmService graph;
     Profile profile;
 
     public ShortestPathManager(){
-        this.fileManager = new FileManager();
-        this.graph = new Graph();
+        this.fileManager = new FileService();
+        this.graph = new AlgorithmService();
         this.profile = null;
     }
 
@@ -35,6 +36,11 @@ public class ShortestPathManager {
         System.out.println("Algorithm has been set.");
     }
 
+    public boolean readProfile() throws IOException {
+        profile = fileManager.readProfile("profile.txt");
+        return ! (null == profile);
+    }
+
     public void readBuilding(String filepath){
         if(! fileManager.readBuilding(filepath)){
             System.out.println("File " + filepath + " could not be found or the provided file does not fulfill the required format.");
@@ -42,15 +48,14 @@ public class ShortestPathManager {
         System.out.println("Building has been successfully scanned.");
     }
 
-    public boolean readProfile() throws IOException {
-        profile = fileManager.readProfile("profile.txt");
-        return ! (null == profile);
-    }
-
     public void printBuilding(){
         if(! fileManager.printBuilding()){
             System.out.println("There is no building to print! A building has to be read first.");
         }
+    }
+
+    public Map<String, Node> getBuilding(){
+        return fileManager.getBuilding();
     }
 
     public void shortestPathWithOwnProfile(String start, String end){
@@ -102,7 +107,7 @@ public class ShortestPathManager {
     public void shortestPathWithNewProfile(String start, String end, boolean useElevator, boolean useStairs, boolean goOutside, boolean alternatePath, String algorithm){
         Profile newProfile = new Profile(useElevator, useStairs, goOutside, alternatePath, algorithm);
 
-        Graph newGraph = new Graph();
+        AlgorithmService newGraph = new AlgorithmService();
         int pathCase = newGraph.shortestPath(start, end, newProfile, fileManager.getBuilding());
 
         switch (pathCase) {
