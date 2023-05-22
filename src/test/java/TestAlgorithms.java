@@ -1,7 +1,7 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.shortestpath.Node;
 import org.shortestpath.ShortestPathManager;
+import org.shortestpath.model.Node;
 
 import java.io.FileWriter;
 import java.io.IOException;

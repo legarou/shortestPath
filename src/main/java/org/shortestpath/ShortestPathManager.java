@@ -1,5 +1,10 @@
 package org.shortestpath;
 
+import org.shortestpath.model.Node;
+import org.shortestpath.model.Profile;
+import org.shortestpath.service.AlgorithmService;
+import org.shortestpath.service.FileService;
+
 import java.io.IOException;
 import java.util.Map;
 
@@ -33,7 +38,7 @@ public class ShortestPathManager {
         }
         profile.setAlgorithmFromString(algorithm);
         fileManager.setProfile(profile);
-        System.out.println("Algorithm has been set.");
+        System.out.println("AlgorithmType has been set.");
     }
 
     public boolean readProfile() throws IOException {
