@@ -1,16 +1,6 @@
-package org.shortestpath;
-import lombok.Getter;
-import lombok.Setter;
+package org.shortestpath.model;
 
 import java.util.Map;
-
-enum NodeType {
-    ROOM,
-    STAIRS,
-    ELEVATOR,
-    PATH,
-    DOOR
-}
 
 public class Node {
     private final String name;

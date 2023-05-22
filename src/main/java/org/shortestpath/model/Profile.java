@@ -1,23 +1,18 @@
-package org.shortestpath;
-
-enum Algorithm {
-    DIJKSTRA,
-    FLOYD_WARSHALL
-}
+package org.shortestpath.model;
 
 
 public class Profile {
     private boolean useStairs;
     private boolean useElevator;
     private boolean goOutside;
-    private Algorithm algorithm;
+    private AlgorithmType algorithm;
     private boolean alternatePath;
 
     public Profile(){
         this.useElevator=true;
         this.useStairs=true;
         this.goOutside=true;
-        this.algorithm=Algorithm.DIJKSTRA;
+        this.algorithm= AlgorithmType.DIJKSTRA;
         this.alternatePath=true;
     }
 
@@ -25,15 +20,15 @@ public class Profile {
         this.useElevator=useElevator;
         this.useStairs=useStairs;
         this.goOutside=goOutside;
-        this.algorithm=Algorithm.valueOf(algorithm.toUpperCase());
+        this.algorithm= AlgorithmType.valueOf(algorithm.toUpperCase());
         this.alternatePath=alternatePath;
     }
 
     public void setAlgorithmFromString(String algorithm){
-        this.algorithm=Algorithm.valueOf(algorithm.toUpperCase());
+        this.algorithm= AlgorithmType.valueOf(algorithm.toUpperCase());
     }
 
-    public Algorithm getAlgorithm(){
+    public AlgorithmType getAlgorithm(){
         return algorithm;
     }
 
@@ -61,7 +56,7 @@ public class Profile {
         this.goOutside = goOutside;
     }
 
-    public void setAlgorithm(Algorithm algorithm) {
+    public void setAlgorithm(AlgorithmType algorithm) {
         this.algorithm = algorithm;
     }
 

@@ -1,4 +1,8 @@
-package org.shortestpath;
+package org.shortestpath.service;
+import org.shortestpath.model.Node;
+import org.shortestpath.model.NodeType;
+import org.shortestpath.model.Profile;
+
 import java.io.BufferedWriter;
 import java.io.File;  // Import the File class
 import java.io.FileNotFoundException;  // Import this class to handle errors
@@ -6,14 +10,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.prefs.PreferencesFactory;
 
 
-public class FileManager {
+public class FileService {
 
     private Map<String, Node> nodes;
     private String filepath;
-    public FileManager(){
+    public FileService(){
         this.filepath = null;
         nodes = new HashMap<>();
     }

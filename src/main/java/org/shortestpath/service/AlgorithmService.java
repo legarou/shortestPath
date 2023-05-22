@@ -1,7 +1,10 @@
-package org.shortestpath;
+package org.shortestpath.service;
 
-import java.time.Duration;
-import java.time.Instant;
+import org.shortestpath.model.AlgorithmType;
+import org.shortestpath.model.Node;
+import org.shortestpath.model.NodeType;
+import org.shortestpath.model.Profile;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +47,7 @@ public class AlgorithmService {
         }
 
         this.start = startNode;
-        if(! profileWasUpdated(newProfile) && profile.getAlgorithm().equals(Algorithm.FLOYD_WARSHALL)){
+        if(! profileWasUpdated(newProfile) && profile.getAlgorithm().equals(AlgorithmType.FLOYD_WARSHALL)){
             // ALTERNATE PATH ?
             if(hasPath()){
                 //printPredecessor();
@@ -58,7 +61,7 @@ public class AlgorithmService {
         applyPreference();
 
 
-        if(profile.getAlgorithm().equals(Algorithm.DIJKSTRA)){
+        if(profile.getAlgorithm().equals(AlgorithmType.DIJKSTRA)){
             dijkstra();
             // ALTERNATE PATH ?
             if(hasPath()){
@@ -91,7 +94,7 @@ public class AlgorithmService {
                 return 5;
             }
 
-        } else if (profile.getAlgorithm().equals(Algorithm.FLOYD_WARSHALL)) {
+        } else if (profile.getAlgorithm().equals(AlgorithmType.FLOYD_WARSHALL)) {
             floyd_warshall();
             // ALTERNATE PATH ?
             if(hasPath()){
@@ -288,7 +291,7 @@ public class AlgorithmService {
         if(null == profile || null == start || null == end)
             return null;
 
-        if(profile.getAlgorithm().equals(Algorithm.DIJKSTRA)) {
+        if(profile.getAlgorithm().equals(AlgorithmType.DIJKSTRA)) {
             if(predecessor.containsKey(end) && predecessor.containsKey(start)) {
                 return getDijkstraResult(end);
             }
@@ -322,7 +325,7 @@ public class AlgorithmService {
         if(null == profile || null == start || null == end)
             return false;
 
-        if(profile.getAlgorithm().equals(Algorithm.DIJKSTRA)) {
+        if(profile.getAlgorithm().equals(AlgorithmType.DIJKSTRA)) {
             if(predecessor.containsKey(end) && predecessor.containsKey(start)) {
                 return printDijkstraResult(end);
             }
@@ -383,7 +386,7 @@ public class AlgorithmService {
         if(null == profile || null == start || null == end)
             return false;
 
-        if(profile.getAlgorithm().equals(Algorithm.DIJKSTRA)) {
+        if(profile.getAlgorithm().equals(AlgorithmType.DIJKSTRA)) {
             if(predecessor.containsKey(end) && predecessor.containsKey(start)) {
                 return ! (null == getDijkstraResult(end) || getDijkstraResult(end).equals(""));
             }
